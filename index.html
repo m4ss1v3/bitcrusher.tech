@@ -1,0 +1,153 @@
+1<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bitcrusher.tech</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000000;
+            color: #00ff00;
+            font-family: 'Courier Prime', monospace;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ascii-banner {
+            font-size: 12px;
+            line-height: 1;
+            text-align: center;
+            white-space: pre;
+            margin-bottom: 30px;
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .quote {
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #00cc00;
+            font-style: italic;
+        }
+
+        .terminal-cursor {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .matrix-char {
+            position: absolute;
+            color: #003300;
+            font-family: 'Courier Prime', monospace;
+            font-size: 14px;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100vh);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .ascii-banner {
+                font-size: 8px;
+            }
+            .quote {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-bg" id="matrix"></div>
+
+    <div class="container">
+        <div class="ascii-banner">
+ ██████╗ ██╗████████╗ ██████╗██████╗ ██╗   ██╗███████╗██╗  ██╗███████╗██████╗
+ ██╔══██╗██║╚══██╔══╝██╔════╝██╔══██╗██║   ██║██╔════╝██║  ██║██╔════╝██╔══██╗
+ ██████╔╝██║   ██║   ██║     ██████╔╝██║   ██║███████╗███████║█████╗  ██████╔╝
+ ██╔══██╗██║   ██║   ██║     ██╔══██╗██║   ██║╚════██║██╔══██║██╔══╝  ██╔══██╗
+ ██████╔╝██║   ██║   ╚██████╗██║  ██║╚██████╔╝███████║██║  ██║███████╗██║  ██║
+ ╚═════╝ ╚═╝   ╚═╝    ╚═════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
+
+████████╗███████╗ ██████╗██╗  ██╗
+╚══██╔══╝██╔════╝██╔════╝██║  ██║
+   ██║   █████╗  ██║     ███████║
+   ██║   ██╔══╝  ██║     ██╔══██║
+   ██║   ███████╗╚██████╗██║  ██║
+   ╚═╝   ╚══════╝ ╚═════╝╚═╝  ╚═╝
+        </div>
+
+        <div class="quote">
+            "are you lost?"<span class="terminal-cursor">_</span>
+        </div>
+    </div>
+
+    <script>
+        // Matrix rain effect
+        function createMatrixRain() {
+            const matrix = document.getElementById('matrix');
+            const chars = '01';
+
+            function createChar() {
+                const char = document.createElement('div');
+                char.className = 'matrix-char';
+                char.textContent = chars[Math.floor(Math.random() * chars.length)];
+                char.style.left = Math.random() * 100 + 'vw';
+                char.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                char.style.animationDelay = Math.random() * 2 + 's';
+
+                matrix.appendChild(char);
+
+                setTimeout(() => {
+                    matrix.removeChild(char);
+                }, 5000);
+            }
+
+            setInterval(createChar, 100);
+        }
+
+        createMatrixRain();
+    </script>
+</body>
+</html>
